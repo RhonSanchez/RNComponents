@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -7,19 +7,28 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Text,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {HeaderTitle} from '../components/HeaderTitle';
 import {styles} from '../theme/appTheme';
+import {useForm} from '../hooks/useForm';
+import {CustomSwitch} from '../components/CustomSwitch';
+
+interface Params {
+  name: string;
+  email: string;
+  phone: string;
+  isSubscribed: boolean;
+}
 
 export const TextInputScreen = () => {
-  const [form, setForm] = useState({name: '', email: '', phone: ''});
-  const onChange = (value: string, field: string) => {
-    setForm({
-      ...form,
-      [field]: value,
-    });
-  };
+  const {form, onChange, isSubscribed} = useForm<Params>({
+    name: '',
+    email: '',
+    phone: '',
+    isSubscribed: false,
+  });
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -43,6 +52,13 @@ export const TextInputScreen = () => {
               keyboardType="email-address"
               keyboardAppearance="dark"
             />
+            <View style={stylesScreen.switchRow}>
+              <Text style={stylesScreen.switchText}>Suscribirse:</Text>
+              <CustomSwitch
+                isOn={isSubscribed}
+                onChange={value => onChange(value, 'isSubscribed')}
+              />
+            </View>
             <HeaderTitle title={JSON.stringify(form, null, 3)} />
             <HeaderTitle title={JSON.stringify(form, null, 3)} />
             <TextInput
@@ -66,6 +82,15 @@ const stylesScreen = StyleSheet.create({
     height: 50,
     paddingHorizontal: 10,
     borderRadius: 10,
+    marginVertical: 10,
+  },
+  switchText: {
+    fontSize: 25,
+  },
+  switchRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginVertical: 10,
   },
 });
