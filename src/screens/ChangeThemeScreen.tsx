@@ -28,7 +28,7 @@ export const ChangeThemeScreen = () => {
           }}>
           <Text
             style={{
-              color: 'white',
+              color: colors.text,
               textAlign: 'center',
               fontSize: 22,
             }}>
@@ -47,7 +47,7 @@ export const ChangeThemeScreen = () => {
           }}>
           <Text
             style={{
-              color: 'white',
+              color: colors.text,
               textAlign: 'center',
               fontSize: 22,
             }}>

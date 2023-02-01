@@ -1,11 +1,15 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {HeaderTitle} from '../components/HeaderTitle';
 import {FadeInImage} from '../components/FadeInImage';
+import {ThemeContext} from '../context/themeContext/ThemeContext';
 
 export const InfinityScrollScreen = () => {
   const [numbers, setNumbers] = useState([0, 1, 2, 3, 4, 5]);
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
 
   const loadMore = () => {
     const newArray: number[] = [];
@@ -45,7 +49,7 @@ export const InfinityScrollScreen = () => {
               alignItems: 'center',
               width: '100%',
             }}>
-            <ActivityIndicator size={25} color="#5856D6" />
+            <ActivityIndicator size={25} color={colors.primary} />
           </View>
         )}
         onEndReached={loadMore}
